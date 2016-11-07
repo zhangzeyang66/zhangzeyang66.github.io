@@ -1,0 +1,626 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="张查理的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="这两天搭建了一个个人主页，地址是zhangzeyang66.github.io/aboutme，主页中有按钮链接直达我的博客，在我博客的主页中也增加了个人主页的链接。下面分步骤介绍一下我的这个个人主页的搭建方法（基于Bootstrap，Windows环境）。在文末还有一段视频来介绍我的步骤。
+
+请注意：我在之前已经搭建了域名为zhangzeyang66.github.io的这个博客，这次是在它的子">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我是如何搭建个人主页的">
+<meta property="og:url" content="http://zhangzeyang66.github.io/2016/07/05/我是如何搭建个人主页的/index.html">
+<meta property="og:site_name" content="张查理的博客">
+<meta property="og:description" content="这两天搭建了一个个人主页，地址是zhangzeyang66.github.io/aboutme，主页中有按钮链接直达我的博客，在我博客的主页中也增加了个人主页的链接。下面分步骤介绍一下我的这个个人主页的搭建方法（基于Bootstrap，Windows环境）。在文末还有一段视频来介绍我的步骤。
+
+请注意：我在之前已经搭建了域名为zhangzeyang66.github.io的这个博客，这次是在它的子">
+<meta property="og:image" content="http://7xr9by.com1.z0.glb.clouddn.com/Capture1.png">
+<meta property="og:image" content="http://7xr9by.com1.z0.glb.clouddn.com/Capture2.png">
+<meta property="og:image" content="http://7xr9by.com1.z0.glb.clouddn.com/Capture3.png">
+<meta property="og:image" content="http://7xr9by.com1.z0.glb.clouddn.com/Capture4.png">
+<meta property="og:updated_time" content="2016-09-09T11:12:41.116Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我是如何搭建个人主页的">
+<meta name="twitter:description" content="这两天搭建了一个个人主页，地址是zhangzeyang66.github.io/aboutme，主页中有按钮链接直达我的博客，在我博客的主页中也增加了个人主页的链接。下面分步骤介绍一下我的这个个人主页的搭建方法（基于Bootstrap，Windows环境）。在文末还有一段视频来介绍我的步骤。
+
+请注意：我在之前已经搭建了域名为zhangzeyang66.github.io的这个博客，这次是在它的子">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 我是如何搭建个人主页的 | 张查理的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张查理的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Have some fun!</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                我是如何搭建个人主页的
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-05T09:18:22+08:00" content="2016-07-05">
+              2016-07-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/博客制作/" itemprop="url" rel="index">
+                    <span itemprop="name">博客制作</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这两天搭建了一个个人主页，地址是<a href="https://zhangzeyang66.github.io/aboutme/">zhangzeyang66.github.io/aboutme</a>，主页中有按钮链接直达我的博客，在我博客的主页中也增加了个人主页的链接。下面分步骤介绍一下我的这个个人主页的搭建方法（基于Bootstrap，Windows环境）。在文末还有一段视频来介绍我的步骤。</p>
+<blockquote>
+<p><strong>请注意：我在之前已经搭建了域名为zhangzeyang66.github.io的这个博客，这次是在它的子目录页面搭建个人主页。我也已经在使用一个原来的SSH Key，这次需要增加一个Key用来搭建个人主页，并进行相应设置。这些都与第一次在GitHub搭建GitHub Pages不同，读者若是第一次搭建，所用步骤在很多方面应该与我的不同。</strong></p>
+</blockquote>
+<h1 id="注册GitHub并安装Git环境"><a href="#注册GitHub并安装Git环境" class="headerlink" title="注册GitHub并安装Git环境"></a>注册GitHub并安装Git环境</h1><p>这些操作我在之前就已经做过了。关于这方面，网上有很多教程，操作起来也并不难，在这里略过这一部分。<br><a id="more"></a></p>
+<hr>
+<h1 id="新建一个repository"><a href="#新建一个repository" class="headerlink" title="新建一个repository"></a>新建一个repository</h1><p>登录到GitHub后，点击首页右上角的 <code>+</code> ，再点击<code>New repository</code>即可开始添加新的工程。我的GitHub账号是zhangzeyang66。由于我已经使用了zhangzeyang66.github.io作为我的博客地址，所以我想把个人主页建在zhangzeyang66.github.io/aboutme。这里我定义Repository name为aboutme（而不是新手常用的<code>USERNAME.github.io</code>或<code>USERNAME.github.com</code>）就可以达到效果。其他设置如下图所示。点击Create repository就成功建立了。<br><img src="http://7xr9by.com1.z0.glb.clouddn.com/Capture1.png" alt=""><br>有些教程要求在建立repository之后使用automatic page generator自动创建一个GitHub Page，其实这不是必须的，因为我们之后要部署自己制作的页面。经过实践，只要将自己的网页部署到<code>gh-pages</code>分支，就可以在相应的地址上生成这个页面了。</p>
+<hr>
+<h1 id="添加并配置SSH-Key"><a href="#添加并配置SSH-Key" class="headerlink" title="添加并配置SSH Key"></a>添加并配置SSH Key</h1><p>在Git Bash中使用下面的语句添加一个SSH Key：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">"zhangzeyang66@github.com"</span></span><br></pre></td></tr></table></figure>
+<p>我之前已经使用zhangzeyang66@126.com获取了一个SSH Key（用于我的博客），文件名称为id_rsa，所以这次在需要输入Key的文件名时，不能使用默认设置，我将它设置为了git_rsa。<br>这样，在系统的.ssh目录下就会新增一个git_rsa文件（无后缀名）和一个git_rsa.pub文件。将git_rsa.pub文件的所有内容复制，并在repository的<code>Settings -&gt; Deploy keys</code>中点击<code>Add deploy key</code>，将git_rsa.pub的内容粘贴到Key里，起一个Title，并勾选<code>Allow write access</code>，最后点击Add key。如下图所示：<br><img src="http://7xr9by.com1.z0.glb.clouddn.com/Capture2.png" alt=""><br>现在电脑里有两个SSH Key，为了防止冲突，需要在.ssh目录下新建一个config文件（无后缀名），内容如下：</p>
+<pre><code>Host github.com  
+    HostName github.com  
+    PreferredAuthentications publickey  
+    IdentityFile ~/.ssh/id_rsa  
+Host my.github.com  
+    HostName github.com  
+    PreferredAuthentications publickey  
+    IdentityFile ~/.ssh/git_rsa
+</code></pre><p>这样，关于个人主页的配置就可以使用my.github.com这个Host。</p>
+<hr>
+<h1 id="部署初始站点"><a href="#部署初始站点" class="headerlink" title="部署初始站点"></a>部署初始站点</h1><p>在需要存储网页文件的文件目录中打开Git Bash，输入以下命令部署一个Jekyll-Bootstrap站点：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/plusjade/jekyll-bootstrap.git aboutme  </span><br><span class="line">$ <span class="built_in">cd</span> aboutme  </span><br><span class="line">$ git remote <span class="built_in">set</span>-url origin git@my.github.com:zhangzeyang66/aboutme.git  </span><br><span class="line">$ git pull origin master  </span><br><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure></p>
+<p>注意我用的是my.github.com，因为前面已经设置过Host，这样可以使用正确的SSH Key。<br>至此，我们就把一个Jekyll默认站点的有关文件上传到了GitHub上，像是这样：<br><img src="http://7xr9by.com1.z0.glb.clouddn.com/Capture3.png" alt=""></p>
+<hr>
+<h1 id="建立并使用gh-pages分支"><a href="#建立并使用gh-pages分支" class="headerlink" title="建立并使用gh-pages分支"></a>建立并使用gh-pages分支</h1><p>现在在浏览器输入主页地址还不能看到任何内容，是因为这个Page必须使用gh-pages分支。在本地的文件目录（对于我是aboutme目录）中打开Git Bash，输入以下命令建立并使用gh-pages分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git branch gh-pages  <span class="comment">#创建分支</span></span><br><span class="line">$ git checkout gh-pages  <span class="comment">#切换分支</span></span><br><span class="line">$ git push origin gh-pages <span class="comment">#把分支推到远程分支</span></span><br></pre></td></tr></table></figure></p>
+<p>这样就把文件上传到了gh-pages分支，并可以在浏览器输入地址看到页面内容。<br>同时把repository中的<code>Settings-&gt;Branches-&gt;Default branch</code>改为gh-pages，这样就可以默认看到gh-pages分支的内容了。</p>
+<hr>
+<h1 id="使用模板并完善内容"><a href="#使用模板并完善内容" class="headerlink" title="使用模板并完善内容"></a>使用模板并完善内容</h1><p>完成上述步骤后生成的页面非常丑，只有一些排版很差的文字，如下图：<br><img src="http://7xr9by.com1.z0.glb.clouddn.com/Capture4.png" alt=""><br>这时候就是模板发挥作用的时候啦！<br>可以在网上搜索Bootstrap或Jekyll模板，找一个自己觉得好看的，把文件下载下来，替换掉原来的文件，然后一点点地修改、增加内容，一个漂亮的个人主页就建成了。<br>这里需要注意，每次将本地仓库中的文件进行修改后，需要在Git Bash中执行以下3个命令，才能将远端的网站页面刷新：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">"statement"</span>   <span class="comment">#此处statement填写此次提交修改的内容，作为日后查阅</span></span><br><span class="line">$ git push origin gh-pages</span><br></pre></td></tr></table></figure></p>
+<p>Bootstrap模板一般都支持移动终端的响应式适配，大家更新页面之后可以用手机或平板访问一下来看一看移动端的效果。<br>至于如何把网页更改成想要的样子，那就是仔细翻看各种文件，弄清它们的包含关系和与具体页面的对应关系。一般是要修改各种html文件，关键是找到与页面某处文字对应的代码部分，之后就好办了。<br>在更改网页文件时，为了提高访问速度，记得把来自Google的字库、访问FaceBook的模块等改掉或删掉，这样对于访问速度的提高是非常明显的。</p>
+<hr>
+<h1 id="（可选）安装Jekyll本地编译环境"><a href="#（可选）安装Jekyll本地编译环境" class="headerlink" title="（可选）安装Jekyll本地编译环境"></a>（可选）安装Jekyll本地编译环境</h1><p>每次更改过文件后都需要执行3个命令，再加上网站会有延时，看起来要好大功夫才能看到网页修改后的效果。要进行比较实时的网页预览，就需要Jekyll的本地编译环境。<br>1.安装<a href="http://rubyinstaller.org/downloads/" target="_blank" rel="external">Ruby</a>，<strong>安装时一定要勾选添加到环境变量PATH</strong>。<br>2.安装<a href="https://rubygems.org/pages/download" target="_blank" rel="external">RubyGems</a>，注意下载ZIP格式的文件，解压到任意目录，并打开cmd命令提示符进入这个目录，输入以下命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruby setup.rb</span><br></pre></td></tr></table></figure></p>
+<p>3.安装Jekyll：在cmd终端中输入：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install jekyll</span><br></pre></td></tr></table></figure></p>
+<p>4.安装jekyll-paginate：在终端中输入：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install jekyll-paginate</span><br></pre></td></tr></table></figure></p>
+<p>5.开启本地实时预览：在终端中输入：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> &#123;<span class="built_in">local</span> repository&#125; <span class="comment">#&#123;local repository&#125;替换成你的本地仓库的目录</span></span><br><span class="line">jekyll serve</span><br></pre></td></tr></table></figure></p>
+<p>开启实时预览后，在地址栏输入<code>http://localhost:4000/</code>回车就可以看到你的网页的模样，而且一旦本地文件有任何更新，网页刷新后都可以立刻看到效果，Amazing！<br>在后面的视频中我展示了这种实时更新的效果。实际上在后来的使用过程中，网页更新的速度比演示的要快好多。</p>
+<hr>
+<h1 id="操作视频"><a href="#操作视频" class="headerlink" title="操作视频"></a>操作视频</h1><p>以下是介绍我的基本操作的视频，前面的文字看不太懂的话可以看看视频的操作。<br><strong>如果出现显示错误（一般是因为使用了HTTPS访问本页而被浏览器阻止了）可以<a href="http://v.youku.com/v_show/id_XMTYzMjg3MjEzMg==.html" target="_blank" rel="external">点击这里</a>。</strong></p>
+<iframe height="320" width="510" src="http://player.youku.com/embed/XMTYzMjg3MjEzMg==" frameborder="0" allowfullscreen></iframe>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/09/博客迁移测试/" rel="next" title="博客迁移测试">
+                <i class="fa fa-chevron-left"></i> 博客迁移测试
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/09/推荐几个Windows下的实用小工具（中）/" rel="prev" title="推荐几个Windows下的实用小工具（中）">
+                推荐几个Windows下的实用小工具（中） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="张查理" />
+          <p class="site-author-name" itemprop="name">张查理</p>
+          <p class="site-description motion-element" itemprop="description">闲来无事 随便写写</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#注册GitHub并安装Git环境"><span class="nav-number">1.</span> <span class="nav-text">注册GitHub并安装Git环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#新建一个repository"><span class="nav-number">2.</span> <span class="nav-text">新建一个repository</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加并配置SSH-Key"><span class="nav-number">3.</span> <span class="nav-text">添加并配置SSH Key</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#部署初始站点"><span class="nav-number">4.</span> <span class="nav-text">部署初始站点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#建立并使用gh-pages分支"><span class="nav-number">5.</span> <span class="nav-text">建立并使用gh-pages分支</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用模板并完善内容"><span class="nav-number">6.</span> <span class="nav-text">使用模板并完善内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#（可选）安装Jekyll本地编译环境"><span class="nav-number">7.</span> <span class="nav-text">（可选）安装Jekyll本地编译环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#操作视频"><span class="nav-number">8.</span> <span class="nav-text">操作视频</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张查理</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

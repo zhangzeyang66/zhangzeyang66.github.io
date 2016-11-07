@@ -1,0 +1,604 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="SDN," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="张查理的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="SSL(Secure Sockets Layer)是为网络通信提供安全性的协议，我们可以使用SSL来保证OpenFlow传输通道的安全。本篇文章主要介绍ONOS控制器与OVS(Open vSwitch)交换机之间使用自签名证书进行SSL连接（这是实现SSL的一种较为简便的方式 ）的配置过程。这部分内容在ONOS的官方Wiki上有介绍，但是其内容不是很细致，有一些需要特别注意的步骤没有进行强调，有的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ONOS与OVS间设置SSL安全连接">
+<meta property="og:url" content="http://zhangzeyang66.github.io/2016/10/18/ONOS与OVS间设置SSL安全连接/index.html">
+<meta property="og:site_name" content="张查理的博客">
+<meta property="og:description" content="SSL(Secure Sockets Layer)是为网络通信提供安全性的协议，我们可以使用SSL来保证OpenFlow传输通道的安全。本篇文章主要介绍ONOS控制器与OVS(Open vSwitch)交换机之间使用自签名证书进行SSL连接（这是实现SSL的一种较为简便的方式 ）的配置过程。这部分内容在ONOS的官方Wiki上有介绍，但是其内容不是很细致，有一些需要特别注意的步骤没有进行强调，有的">
+<meta property="og:updated_time" content="2016-11-07T02:26:40.795Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ONOS与OVS间设置SSL安全连接">
+<meta name="twitter:description" content="SSL(Secure Sockets Layer)是为网络通信提供安全性的协议，我们可以使用SSL来保证OpenFlow传输通道的安全。本篇文章主要介绍ONOS控制器与OVS(Open vSwitch)交换机之间使用自签名证书进行SSL连接（这是实现SSL的一种较为简便的方式 ）的配置过程。这部分内容在ONOS的官方Wiki上有介绍，但是其内容不是很细致，有一些需要特别注意的步骤没有进行强调，有的">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> ONOS与OVS间设置SSL安全连接 | 张查理的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">张查理的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Have some fun!</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ONOS与OVS间设置SSL安全连接
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-18T23:13:51+08:00" content="2016-10-18">
+              2016-10-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/项目展示/" itemprop="url" rel="index">
+                    <span itemprop="name">项目展示</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>SSL(Secure Sockets Layer)是为网络通信提供安全性的协议，我们可以使用SSL来保证OpenFlow传输通道的安全。本篇文章主要介绍ONOS控制器与OVS(Open vSwitch)交换机之间使用自签名证书进行SSL连接（这是实现SSL的一种较为简便的方式 ）的配置过程。这部分内容在ONOS的<a href="https://wiki.onosproject.org/pages/viewpage.action?pageId=6358090" target="_blank" rel="external">官方Wiki</a>上有介绍，但是其内容不是很细致，有一些需要特别注意的步骤没有进行强调，有的命令也漏掉了一些选项设置，导致我花了好长时间才配置好。所以写这篇文章，是想让大家照着流程做就一定能成功。如果对这方面有什么问题，欢迎与我交流。</p>
+<p>以下步骤中的ONOS端与OVS端可以是两台不同的机器，也可以是相同的机器（为了实验方便），本文以两台不同的虚拟机为例。<br><a id="more"></a></p>
+<h2 id="一、配置步骤"><a href="#一、配置步骤" class="headerlink" title="一、配置步骤"></a>一、配置步骤</h2><h3 id="1-生成ONOS端的自签名证书"><a href="#1-生成ONOS端的自签名证书" class="headerlink" title="1. 生成ONOS端的自签名证书"></a>1. 生成ONOS端的自签名证书</h3><p>在ONOS端新建一个文件夹（本文称作SSL文件夹）用来存储本实验中的所有相关文件，在SSL文件夹下使用keytool工具生成一个自签名的证书库onos.jks（包含私钥与公钥证书信息）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ keytool -genkey -keyalg RSA -alias onos -keystore onos.jks -storepass <span class="number">111111</span> -validity <span class="number">365</span> -keysize <span class="number">2048</span></span><br><span class="line">What is your first and last name?</span><br><span class="line">  [Unknown]:  Zeyang Zhang</span><br><span class="line">What is the name of your organizational unit?</span><br><span class="line">  [Unknown]:  FNLab-BUPT</span><br><span class="line">What is the name of your organization?</span><br><span class="line">  [Unknown]:  BUPT</span><br><span class="line">What is the name of your City or Locality?</span><br><span class="line">  [Unknown]:  Beijing</span><br><span class="line">What is the name of your State or Province?</span><br><span class="line">  [Unknown]:  Beijing</span><br><span class="line">What is the two-letter country code <span class="keyword">for</span> this unit?</span><br><span class="line">  [Unknown]:  CN</span><br><span class="line">Is CN=Zeyang Zhang, OU=FNLab-BUPT, O=BUPT, L=Beijing, ST=Beijing, C=CN correct?</span><br><span class="line">  [no]:  yes</span><br><span class="line"></span><br><span class="line">Enter key password <span class="keyword">for</span> &lt;onos&gt;</span><br><span class="line">	(RETURN <span class="keyword">if</span> same as keystore password):    <span class="comment">#直接回车！</span></span><br><span class="line">$ ls</span><br><span class="line">onos.jks</span><br></pre></td></tr></table></figure></p>
+<p>其中storepass（至少6个字符）应该牢记，各种信息随便填。  </p>
+<p><strong>请注意：在输入&lt;onos&gt;的主密码时一定要直接敲回车（即&lt;onos&gt;的主密码一定要和keystore密码相同，否则在测试时ONOS端会出现”SSL init failed: Cannot recover key”错误）。</strong></p>
+<p>将onos.jks经过两步转换为onos.pem文件：onos.jks→onos.p12→onos.pem<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ keytool -importkeystore -srckeystore onos.jks -destkeystore onos.p12 -srcstoretype jks -deststoretype pkcs12</span><br><span class="line">Enter destination keystore password:  <span class="comment">#为了方便，跟之前一样吧（111111）</span></span><br><span class="line">Re-enter new password: </span><br><span class="line">Enter <span class="built_in">source</span> keystore password:  <span class="comment">#onos.jks的密码（111111）</span></span><br><span class="line">Entry <span class="keyword">for</span> <span class="built_in">alias</span> onos successfully imported.</span><br><span class="line">Import <span class="built_in">command</span> completed:  <span class="number">1</span> entries successfully imported, <span class="number">0</span> entries failed or cancelled</span><br><span class="line">$ ls</span><br><span class="line">onos.jks  onos.p12</span><br><span class="line">$ openssl pkcs12 -in onos.p12 -out onos.pem</span><br><span class="line">Enter Import Password:   <span class="comment">#111111</span></span><br><span class="line">MAC verified OK</span><br><span class="line">Enter PEM pass phrase:   <span class="comment">#随便填，4个字符或以上有效</span></span><br><span class="line">Verifying - Enter PEM pass phrase:</span><br><span class="line">$ ls</span><br><span class="line">onos.jks  onos.p12  onos.pem</span><br></pre></td></tr></table></figure></p>
+<p>onos.pem的内容大概是这样的：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ cat onos.pem</span><br><span class="line">Bag Attributes</span><br><span class="line">    friendlyName: onos</span><br><span class="line">    <span class="built_in">local</span>KeyID: <span class="number">54</span> <span class="number">69</span> <span class="number">6</span>D <span class="number">65</span> <span class="number">20</span> <span class="number">31</span> <span class="number">34</span> <span class="number">37</span> <span class="number">36</span> <span class="number">35</span> <span class="number">38</span> <span class="number">39</span> <span class="number">38</span> <span class="number">36</span> <span class="number">31</span> <span class="number">30</span> <span class="number">33</span> <span class="number">38</span> </span><br><span class="line">Key Attributes: &lt;No Attributes&gt;</span><br><span class="line">-----BEGIN ENCRYPTED PRIVATE KEY-----</span><br><span class="line">MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQITT2bGjZ0m1ICAggA</span><br><span class="line">    ......</span><br><span class="line">A87aqKt2iIJiSdIraRHjvl93Qo3KhD7OOjFpFb7fRcxjIXxkaW+Jbx7rcMR5ASzo</span><br><span class="line">dWo=</span><br><span class="line">-----END ENCRYPTED PRIVATE KEY-----</span><br><span class="line">Bag Attributes</span><br><span class="line">    friendlyName: onos</span><br><span class="line">    <span class="built_in">local</span>KeyID: <span class="number">54</span> <span class="number">69</span> <span class="number">6</span>D <span class="number">65</span> <span class="number">20</span> <span class="number">31</span> <span class="number">34</span> <span class="number">37</span> <span class="number">36</span> <span class="number">35</span> <span class="number">38</span> <span class="number">39</span> <span class="number">38</span> <span class="number">36</span> <span class="number">31</span> <span class="number">30</span> <span class="number">33</span> <span class="number">38</span> </span><br><span class="line">subject=/C=CN/ST=Beijing/L=Beijing/O=BUPT/OU=FNLab-BUPT/CN=Zeyang Zhang</span><br><span class="line">issuer=/C=CN/ST=Beijing/L=Beijing/O=BUPT/OU=FNLab-BUPT/CN=Zeyang Zhang</span><br><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">MIIDdzCCAl+gAwIBAgIEa++BnjANBgkqhkiG9w0BAQsFADBsMQswCQYDVQQGEwJD</span><br><span class="line">    ......</span><br><span class="line">HW4tyiJKfrzrhEhRKLIrJz4Y9W3HeC+<span class="number">9</span>FXts3qebCFBsaW52oQwXUBT2X7AngVpr</span><br><span class="line">+X0bz9JYv6uJ7qG2c0T7yyZ+ajCHqTiStAXx</span><br><span class="line">-----END CERTIFICATE-----</span><br></pre></td></tr></table></figure></p>
+<p>接下来我们需要新建一个叫做cacert.pem的文件用来给OVS使用，它的内容是onos.pem的证书部分，即从中间的”Bag Attributes”到最后的部分：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ cat cacert.pem </span><br><span class="line">Bag Attributes</span><br><span class="line">    friendlyName: onos</span><br><span class="line">    <span class="built_in">local</span>KeyID: <span class="number">54</span> <span class="number">69</span> <span class="number">6</span>D <span class="number">65</span> <span class="number">20</span> <span class="number">31</span> <span class="number">34</span> <span class="number">37</span> <span class="number">36</span> <span class="number">35</span> <span class="number">38</span> <span class="number">39</span> <span class="number">38</span> <span class="number">36</span> <span class="number">31</span> <span class="number">30</span> <span class="number">33</span> <span class="number">38</span> </span><br><span class="line">subject=/C=CN/ST=Beijing/L=Beijing/O=BUPT/OU=FNLab-BUPT/CN=Zeyang Zhang</span><br><span class="line">issuer=/C=CN/ST=Beijing/L=Beijing/O=BUPT/OU=FNLab-BUPT/CN=Zeyang Zhang</span><br><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">MIIDdzCCAl+gAwIBAgIEa++BnjANBgkqhkiG9w0BAQsFADBsMQswCQYDVQQGEwJD</span><br><span class="line">    ......</span><br><span class="line">HW4tyiJKfrzrhEhRKLIrJz4Y9W3HeC+<span class="number">9</span>FXts3qebCFBsaW52oQwXUBT2X7AngVpr</span><br><span class="line">+X0bz9JYv6uJ7qG2c0T7yyZ+ajCHqTiStAXx</span><br><span class="line">-----END CERTIFICATE-----</span><br><span class="line">$ ls</span><br><span class="line">cacert.pem  onos.jks  onos.p12  onos.pem</span><br></pre></td></tr></table></figure></p>
+<p>请注意：两个中间文件onos.p12和onos.pem已经没有用了，安全起见应该被删除。</p>
+<h3 id="2-将ONOS的证书复制到OVS端"><a href="#2-将ONOS的证书复制到OVS端" class="headerlink" title="2.将ONOS的证书复制到OVS端"></a>2.将ONOS的证书复制到OVS端</h3><p>把cacert.pem复制到OVS端的/var/lib/openvswitch/pki/controllerca目录下（该目录中可能已经有了一个名为cacert.pem的文件，可先将其备份一下），此目录用来存放OVS信任的证书授权机构的证书。</p>
+<h3 id="3-生成OVS端的自签名证书并配置OVS端的SSL"><a href="#3-生成OVS端的自签名证书并配置OVS端的SSL" class="headerlink" title="3.生成OVS端的自签名证书并配置OVS端的SSL"></a>3.生成OVS端的自签名证书并配置OVS端的SSL</h3><p>进入OVS端的/etc/openvswitch目录，使用自己的pki请求和签署一个数字证书，生成OVS的私钥文件sc-privkey.pem和公钥证书sc-cert.pem：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /etc/openvswitch</span><br><span class="line">/etc/openvswitch$ sudo ovs-pki --dir=/var/lib/openvswitch/pki req+sign sc switch</span><br><span class="line">sc-req.pem	<span class="number">2016</span>年 <span class="number">10</span>月 <span class="number">16</span>日 星期日 <span class="number">12</span>:<span class="number">33</span>:<span class="number">29</span> CST</span><br><span class="line">	fingerprint <span class="number">36</span>a25f547b875e3fd3d5e53230eee4e0bd79251b</span><br><span class="line">/etc/openvswitch$ ll</span><br><span class="line">total <span class="number">52</span></span><br><span class="line">drwxr-xr-x   <span class="number">2</span> root root  <span class="number">4096</span> <span class="number">10</span>月 <span class="number">16</span> <span class="number">12</span>:<span class="number">33</span> ./</span><br><span class="line">drwxr-xr-x <span class="number">137</span> root root <span class="number">12288</span> <span class="number">10</span>月 <span class="number">16</span> <span class="number">11</span>:<span class="number">49</span> ../</span><br><span class="line">    ......</span><br><span class="line">-rw-r--r--   <span class="number">1</span> root root  <span class="number">4053</span> <span class="number">10</span>月 <span class="number">16</span> <span class="number">12</span>:<span class="number">33</span> sc-cert.pem</span><br><span class="line">-rw-------   <span class="number">1</span> root root  <span class="number">1675</span> <span class="number">10</span>月 <span class="number">16</span> <span class="number">12</span>:<span class="number">33</span> sc-privkey.pem</span><br><span class="line">-rw-r--r--   <span class="number">1</span> root root  <span class="number">3601</span> <span class="number">10</span>月 <span class="number">16</span> <span class="number">12</span>:<span class="number">33</span> sc-req.pem</span><br><span class="line">    ......</span><br></pre></td></tr></table></figure></p>
+<p>开启OVS服务，使用ovs-vsctl set-ssl设置OVS端的SSL（配置OVS的私钥文件、OVS的证书文件和ONOS的证书文件的位置）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ovs-vsctl <span class="built_in">set</span>-ssl /etc/openvswitch/sc-privkey.pem /etc/openvswitch/sc-cert.pem /var/lib/openvswitch/pki/controllerca/cacert.pem</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-将OVS的证书复制到ONOS端并配置ONOS端的SSL"><a href="#4-将OVS的证书复制到ONOS端并配置ONOS端的SSL" class="headerlink" title="4.将OVS的证书复制到ONOS端并配置ONOS端的SSL"></a>4.将OVS的证书复制到ONOS端并配置ONOS端的SSL</h3><p>把OVS端的sc-cert.pem复制到ONOS端的SSL文件夹中，然后在ONOS端使用keytool -importcert将sc-cert.pem导入到ONOS的证书库onos.jks中：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ keytool -importcert -file sc-cert.pem -keystore onos.jks</span><br><span class="line">Enter keystore password:  <span class="comment">#111111</span></span><br><span class="line">Owner: CN=sc id:<span class="number">2</span>c950c10-<span class="number">99</span>f5-<span class="number">4887</span><span class="operator">-a</span>3a4-<span class="number">15085</span>e7580b7, OU=Open vSwitch certifier, O=Open vSwitch, ST=CA, C=US</span><br><span class="line">Issuer: CN=OVS switchca CA Certificate (<span class="number">2016</span> <span class="number">10</span>æ <span class="number">02</span> <span class="number">19</span>:<span class="number">12</span>:<span class="number">35</span>), OU=switchca, O=Open vSwitch, ST=CA, C=US</span><br><span class="line">Serial number: <span class="number">2</span></span><br><span class="line">Valid from: Sun Oct <span class="number">16</span> <span class="number">12</span>:<span class="number">33</span>:<span class="number">29</span> CST <span class="number">2016</span> until: Wed Oct <span class="number">14</span> <span class="number">12</span>:<span class="number">33</span>:<span class="number">29</span> CST <span class="number">2026</span></span><br><span class="line">Certificate fingerprints:</span><br><span class="line">	 MD5:  <span class="number">58</span>:DD:<span class="number">8</span>C:<span class="number">9</span>F:<span class="number">1</span>E:DB:EB:BA:<span class="number">8</span>C:A7:D0:<span class="number">19</span>:<span class="number">8</span>F:<span class="number">62</span>:BB:<span class="number">03</span></span><br><span class="line">	 SHA1: <span class="number">4</span>F:<span class="number">88</span>:<span class="number">28</span>:<span class="number">61</span>:<span class="number">65</span>:EA:<span class="number">79</span>:<span class="number">4</span>A:<span class="number">45</span>:DF:B3:<span class="number">75</span>:<span class="number">60</span>:<span class="number">50</span>:<span class="number">0</span>A:A9:CA:CB:CB:<span class="number">2</span>D</span><br><span class="line">	 SHA256: <span class="number">05</span>:<span class="number">9</span>A:C1:<span class="number">14</span>:<span class="number">36</span>:<span class="number">00</span>:<span class="number">63</span>:<span class="number">85</span>:<span class="number">90</span>:DB:<span class="number">3</span>B:<span class="number">4</span>A:<span class="number">1</span>A:<span class="number">59</span>:<span class="number">14</span>:<span class="number">13</span>:E4:DB:<span class="number">5</span>A:<span class="number">9</span>C:<span class="number">2</span>E:<span class="number">91</span>:E1:CC:D5:<span class="number">8</span>F:<span class="number">52</span>:<span class="number">80</span>:<span class="number">89</span>:FE:CB:<span class="number">1</span>F</span><br><span class="line">	 Signature algorithm name: MD5withRSA</span><br><span class="line">	 Version: <span class="number">1</span></span><br><span class="line">Trust this certificate? [no]:  yes</span><br><span class="line">Certificate was added to keystore</span><br></pre></td></tr></table></figure></p>
+<p>使用下面的命令查看证书库的内容，可以发现证书库已经包含有了PrivateKeyEntry和trustedCertEntry。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ keytool -list -keystore onos.jks</span><br><span class="line">Enter keystore password:  <span class="comment">#111111</span></span><br><span class="line"></span><br><span class="line">Keystore <span class="built_in">type</span>: JKS</span><br><span class="line">Keystore provider: SUN</span><br><span class="line"></span><br><span class="line">Your keystore contains <span class="number">2</span> entries</span><br><span class="line"> </span><br><span class="line">onos, Oct <span class="number">16</span>, <span class="number">2016</span>, PrivateKeyEntry, </span><br><span class="line">Certificate fingerprint (SHA1): <span class="number">39</span>:D4:<span class="number">55</span>:<span class="number">8</span>D:F4:<span class="number">59</span>:<span class="number">31</span>:<span class="number">08</span>:<span class="number">70</span>:CA:C6:A8:<span class="number">24</span>:D9:<span class="number">96</span>:<span class="number">84</span>:<span class="number">76</span>:<span class="number">39</span>:<span class="number">0</span>C:<span class="number">3</span>C</span><br><span class="line">mykey, Oct <span class="number">16</span>, <span class="number">2016</span>, trustedCertEntry, </span><br><span class="line">Certificate fingerprint (SHA1): <span class="number">4</span>F:<span class="number">88</span>:<span class="number">28</span>:<span class="number">61</span>:<span class="number">65</span>:EA:<span class="number">79</span>:<span class="number">4</span>A:<span class="number">45</span>:DF:B3:<span class="number">75</span>:<span class="number">60</span>:<span class="number">50</span>:<span class="number">0</span>A:A9:CA:CB:CB:<span class="number">2</span>D</span><br></pre></td></tr></table></figure></p>
+<p>下面一步是设置相关的环境变量。ONOS的Wiki上给出的方法是将命令加入$ONOS_HOME/tools/package/bin/onos-service，但是我试了之后发现并没有用。其实直接在终端里export以下就行了，如下（注意写出onos.jks的绝对路径，保证Password正确）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">export</span> EXTRA_JAVA_OPTS=<span class="string">"-DenableOFTLS=true -Djavax.net.ssl.keyStore=/home/zzy/SSL/onos.jks -Djavax.net.ssl.keyStorePassword=111111 -Djavax.net.ssl.trustStore=/home/zzy/SSL/onos.jks -Djavax.net.ssl.trustStorePassword=111111"</span></span><br></pre></td></tr></table></figure></p>
+<p>若要使ONOS每次开启时都进入SSL模式，可以将这个命令写入.profile之类的文件。</p>
+<p>这样，ONOS端的SSL就配置完成了。</p>
+<h2 id="二、进行测试"><a href="#二、进行测试" class="headerlink" title="二、进行测试"></a>二、进行测试</h2><p>使用onos-karaf clean开启ONOS端的ONOS系统，启动后在ONOS的日志里会看到以下记录，说明ONOS已经进入了SSL模式。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span>-<span class="number">10</span>-<span class="number">16</span> <span class="number">13</span>:<span class="number">53</span>:<span class="number">14</span>,<span class="number">926</span> | INFO  | -message-handler | Controller                       | <span class="number">162</span> - org.onosproject.onos-of-ctl - <span class="number">1.7</span>.<span class="number">0</span>.SNAPSHOT | OpenFlow Security is enabled</span><br></pre></td></tr></table></figure></p>
+<p>在OVS端启动OVS服务，新建一个网桥并使用SSL方式链接到ONOS控制器：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ovs-vsctl add-br b1</span><br><span class="line">$ sudo ovs-vsctl <span class="built_in">set</span>-controller b1 ssl:<span class="number">192.168</span>.<span class="number">194.133</span>:<span class="number">6653</span></span><br></pre></td></tr></table></figure></p>
+<p>这时在ONOS端使用devices命令，会发现OVS已经成功连接到了ONOS控制器：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">onos&gt; devices</span><br><span class="line">id=of:<span class="number">00001</span>a633cb35b4f, available=<span class="literal">true</span>, role=MASTER, <span class="built_in">type</span>=SWITCH, mfr=Nicira, Inc., hw=Open vSwitch, sw=<span class="number">2.6</span>.<span class="number">0</span>, serial=None, driver=ovs, channelId=<span class="number">192.168</span>.<span class="number">194.131</span>:<span class="number">51524</span>, managementAddress=<span class="number">192.168</span>.<span class="number">194.131</span>, protocol=OF_13</span><br></pre></td></tr></table></figure></p>
+<p>也可以使用mininet连接控制器，需要注意只有为每个交换机正确打开SSL连接后才能连接成功。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mn --topo linear,<span class="number">3</span> --controller remote</span><br><span class="line">*** Creating network</span><br><span class="line">*** Adding controller</span><br><span class="line">Unable to contact the remote controller at <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6653</span></span><br><span class="line">Unable to contact the remote controller at <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6633</span></span><br><span class="line">Setting remote controller to <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">6653</span></span><br><span class="line">*** Adding hosts:</span><br><span class="line">h1 h2 h3 </span><br><span class="line">*** Adding switches:</span><br><span class="line">s1 s2 s3 </span><br><span class="line">*** Adding links:</span><br><span class="line">(h1, s1) (h2, s2) (h3, s3) (s2, s1) (s3, s2) </span><br><span class="line">*** Configuring hosts</span><br><span class="line">h1 h2 h3 </span><br><span class="line">*** Starting controller</span><br><span class="line">c0 </span><br><span class="line">*** Starting <span class="number">3</span> switches</span><br><span class="line">s1 s2 s3 ...</span><br><span class="line">*** Starting CLI:</span><br><span class="line">mininet&gt; sh ovs-vsctl <span class="built_in">set</span>-controller s1 ssl:<span class="number">192.168</span>.<span class="number">194.133</span>:<span class="number">6653</span></span><br><span class="line">mininet&gt; sh ovs-vsctl <span class="built_in">set</span>-controller s2 ssl:<span class="number">192.168</span>.<span class="number">194.133</span>:<span class="number">6653</span></span><br><span class="line">mininet&gt; sh ovs-vsctl <span class="built_in">set</span>-controller s3 ssl:<span class="number">192.168</span>.<span class="number">194.133</span>:<span class="number">6653</span></span><br></pre></td></tr></table></figure></p>
+<p>大家可以在此基础上做一些实验，如试一试在两端证书不匹配的情况下进行连接会发生什么，以此来验证SSL连接的安全性。也可以进行抓包分析，来验证SSL的加密传输特性。</p>
+<p>本文链接：<a href="http://www.sdnlab.com/17969.html" target="_blank" rel="external">http://www.sdnlab.com/17969.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SDN/" rel="tag">#SDN</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/09/推荐几个Windows下的实用小工具（中）/" rel="next" title="推荐几个Windows下的实用小工具（中）">
+                <i class="fa fa-chevron-left"></i> 推荐几个Windows下的实用小工具（中）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="张查理" />
+          <p class="site-author-name" itemprop="name">张查理</p>
+          <p class="site-description motion-element" itemprop="description">闲来无事 随便写写</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、配置步骤"><span class="nav-number">1.</span> <span class="nav-text">一、配置步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-生成ONOS端的自签名证书"><span class="nav-number">1.1.</span> <span class="nav-text">1. 生成ONOS端的自签名证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-将ONOS的证书复制到OVS端"><span class="nav-number">1.2.</span> <span class="nav-text">2.将ONOS的证书复制到OVS端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-生成OVS端的自签名证书并配置OVS端的SSL"><span class="nav-number">1.3.</span> <span class="nav-text">3.生成OVS端的自签名证书并配置OVS端的SSL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-将OVS的证书复制到ONOS端并配置ONOS端的SSL"><span class="nav-number">1.4.</span> <span class="nav-text">4.将OVS的证书复制到ONOS端并配置ONOS端的SSL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、进行测试"><span class="nav-number">2.</span> <span class="nav-text">二、进行测试</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张查理</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
