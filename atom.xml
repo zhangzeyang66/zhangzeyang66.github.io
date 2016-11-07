@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zhangzeyang66.github.io/"/>
-  <updated>2016-11-07T02:26:40.795Z</updated>
+  <updated>2016-11-07T04:42:21.349Z</updated>
   <id>http://zhangzeyang66.github.io/</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo的NexT主题部署后不显示内容的解决方法</title>
+    <link href="http://zhangzeyang66.github.io/2016/11/07/Hexo%E7%9A%84NexT%E4%B8%BB%E9%A2%98%E9%83%A8%E7%BD%B2%E5%90%8E%E4%B8%8D%E6%98%BE%E7%A4%BA%E5%86%85%E5%AE%B9%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
+    <id>http://zhangzeyang66.github.io/2016/11/07/Hexo的NexT主题部署后不显示内容的解决方法/</id>
+    <published>2016-11-07T04:12:36.000Z</published>
+    <updated>2016-11-07T04:42:21.349Z</updated>
+    
+    <content type="html">&lt;p&gt;今天想把我之前的文章格式改一改，但是改完后在本地预览没有任何问题，部署到GitHub上就出现了内容无法显示出来的情况。就是下图的效果，好像文字都变透明了，反正看不到。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;http://7xr9by.com1.z0.glb.clouddn.com/NextScreenshot.png?imageView2/0/w/700/&quot; alt=&quot;&quot;&gt;&lt;br&gt;头开始以为是网络传输的问题，但是我逐渐发现没有那么简单。最后在&lt;strong&gt;万能的知乎&lt;/strong&gt;上找到了答案：Github在11月3日升级了他们的Jekyll到3.3版本，在这篇&lt;a href=&quot;https://github.com/blog/2277-what-s-new-in-github-pages-with-jekyll-3-3&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;说明文章&lt;/a&gt;里提到了下面的内容，就是Jekyll 现在默认忽略 vendor 和 node_modules 文件夹以加快构建速度和规避潜在的错误!&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Finally, to make it easier to vendor third-party dependencies via package managers like Bundler or NPM (or Yarn), Jekyll now ignores the &lt;code&gt;vendor&lt;/code&gt; and &lt;code&gt;node_modules&lt;/code&gt; directories by default, speeding up build times and avoiding potential errors. If you need those directories included in your site, set &lt;code&gt;exclude: []&lt;/code&gt; in your site’s configuration file.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;由于NexT主题文件里含有source/vendors文件夹，所以里面的内容就被忽略了。。。&lt;/p&gt;
+&lt;p&gt;据说新的NexT主题修改了venders文件夹的名称，但是我现在还不想更新主题。最后我使用的是知乎里&lt;a href=&quot;https://www.zhihu.com/question/52251404&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个问题&lt;/a&gt;的高票答案的方法：手动将主题里的&lt;code&gt;source/vendors&lt;/code&gt;目录修改成&lt;code&gt;source/lib&lt;/code&gt;(或是其他的名称，lib亲测可用)；同时,修改下主题配置文件&lt;code&gt;_config.yml&lt;/code&gt;,将&lt;code&gt;internal: vendors&lt;/code&gt;改成你所修改的名字。&lt;/p&gt;
+&lt;p&gt;大功告成！&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天想把我之前的文章格式改一改，但是改完后在本地预览没有任何问题，部署到GitHub上就出现了内容无法显示出来的情况。就是下图的效果，好像文字都变透明了，反正看不到。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="博客制作" scheme="http://zhangzeyang66.github.io/categories/%E5%8D%9A%E5%AE%A2%E5%88%B6%E4%BD%9C/"/>
+    
+    
+      <category term="Hexo" scheme="http://zhangzeyang66.github.io/tags/Hexo/"/>
+    
+  </entry>
   
   <entry>
     <title>ONOS与OVS间设置SSL安全连接</title>
