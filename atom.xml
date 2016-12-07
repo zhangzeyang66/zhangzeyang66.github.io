@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zhangzeyang66.github.io/"/>
-  <updated>2016-11-07T04:42:21.349Z</updated>
+  <updated>2016-12-07T09:52:48.125Z</updated>
   <id>http://zhangzeyang66.github.io/</id>
   
   <author>
@@ -16,9 +16,54 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>[转]maven-bundle-plugin的指令说明</title>
+    <link href="http://zhangzeyang66.github.io/2016/12/07/maven-bundle-plugin/"/>
+    <id>http://zhangzeyang66.github.io/2016/12/07/maven-bundle-plugin/</id>
+    <published>2016-12-07T09:26:12.000Z</published>
+    <updated>2016-12-07T09:52:48.125Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;转自&lt;a href=&quot;http://xiaoruoen.blog.51cto.com/4828946/1232285&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://xiaoruoen.blog.51cto.com/4828946/1232285&lt;/a&gt;，英文文档&lt;a href=&quot;http://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;在这里&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;lt-Export-Package-gt&quot;&gt;&lt;a href=&quot;#lt-Export-Package-gt&quot; class=&quot;headerlink&quot; title=&quot;&amp;lt;Export-Package&amp;gt;&quot;&gt;&lt;/a&gt;&amp;lt;Export-Package&amp;gt;&lt;/h3&gt;&lt;p&gt;Export-Package指令列出所有bundle要导出的包。这些包会从能找到的class中被复制到bundle JAR中。因此，我们能够只包含class文件到bundle中而不用去关心源代码。Export-Package可以使用通配符”*”,也可以使用否定符号”!”排除某个包。&lt;/p&gt;
+&lt;p&gt;Export-Package中列出的包是有顺序的。先列出的比后列出的要优先应用。假如指定了规则”org.foo.*,!org.foo.impl”，因为第一个规则把org.foo下的所有包都导出了，第二个规则就没有作了。相反，如果指定了规则”!org.foo.impl,org.foo.*“,就可以导出除了org.foo.impl外的所有包。&lt;/p&gt;
+&lt;p&gt;根据标准OSGI R4语法，包的规则可以包含指示符与属性，指示符与属性会被正确的复制用来生成Export-Package manifest header。除了明确的列出包的版本属性。BND会检查源JAR包文件或者从package目录下的packageinfo文件来确定版本。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;lt-Private-Package-gt&quot;&gt;&lt;a href=&quot;#lt-Private-Package-gt&quot; class=&quot;headerlink&quot; title=&quot;&amp;lt;Private-Package&amp;gt;&quot;&gt;&lt;/a&gt;&amp;lt;Private-Package&amp;gt;&lt;/h3&gt;&lt;p&gt;Private-Package指令语法与Export-Package指令类似，但Private-Package是用来说明bundle中哪些包是不会被导出的。如果一个包被同时声明了Export-Package与Private-Package，那么以Export优先。&lt;/p&gt;
+&lt;h3 id=&quot;lt-Include-Resource-gt&quot;&gt;&lt;a href=&quot;#lt-Include-Resource-gt&quot; class=&quot;headerlink&quot; title=&quot;&amp;lt;Include-Resource&amp;gt;&quot;&gt;&lt;/a&gt;&amp;lt;Include-Resource&amp;gt;&lt;/h3&gt;&lt;p&gt;Include-Resource是用来列出要复制到bundle JAR文件中的资源的。资源声明可以有以下几种方式。&lt;/p&gt;
+&lt;p&gt;assignment ::= PATH ‘=’ PATH&lt;br&gt;simple ::= PATH&lt;br&gt;inline ::= ‘@’ PATH&lt;/p&gt;
+&lt;p&gt;对于Include-Resource指令来说，实际的文件路径是相对于pom.xml来说的，但复制的目录是相对于JAR文件的根目录来说的。对于simple格式与assignment格式来说，PATH可以是文件或者目录。simple规则会把文件直接放到bundle JAR的根目录下，比如src/main/resources/a/b.c就会把b.c打包的budle JAR文件的根目录下。如果PATH是一个目录，就会把目录的整个层级结构打包的bundle JAR文件根目录下。如果要把资源放到bundle JAR文件的子目录下，需要用到assignment规则。左边的PATH代表的是目标地址，右边的PATH代表的是源地址。inline对应的PATH必须是ZIP或者JAR，它会把JAR或ZIP中的内容合并到budle JAR文件中。&lt;/p&gt;
+&lt;p&gt;Include-Resource例子:&lt;br&gt;&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;Include-Resource&lt;/span&gt;&amp;gt;&lt;/span&gt;rescopy/a.info=res/a.info,#将res/a.info复制到bundle中的rescopy/a.info&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;@a.jar,#将a.jar中的内容合并到bundle中&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;a.txt,#将a.txt复制到bundle中&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;a.txt&amp;#125;#将a.txt复制到bundle中&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;Include-Resource&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&quot;lt-Import-Package-gt&quot;&gt;&lt;a href=&quot;#lt-Import-Package-gt&quot; class=&quot;headerlink&quot; title=&quot;&amp;lt;Import-Package&amp;gt;&quot;&gt;&lt;/a&gt;&amp;lt;Import-Package&amp;gt;&lt;/h3&gt;&lt;p&gt;Import-Package指令列出bundle所需要包含的包，默认的值是”&lt;em&gt;“,包含所有导出的包。这个值很少需要被指定，然而，有些时候你不想导入需个包，可以使用”!”符号来剔除一些包。Import-Package的package规则与Export-Package是一样，即package规则是有序的。比如你要引入除了org.foo.impl外的所有包，需要这样写”!org.foo.impl,&lt;/em&gt;“而不是”*,!org.foo.impl”&lt;/p&gt;
+&lt;h3 id=&quot;默认行为&quot;&gt;&lt;a href=&quot;#默认行为&quot; class=&quot;headerlink&quot; title=&quot;默认行为&quot;&gt;&lt;/a&gt;默认行为&lt;/h3&gt;&lt;p&gt;&amp;lt;Bundle-SymbolicName&amp;gt; 通过Maven2OsgiConverter插件来计算，算法如下:&lt;/p&gt;
+&lt;p&gt;以groupId+”.”+artifactId来得到symbolic name，除了以下几种情况:&lt;br&gt;如果artifact.getFile是null而且jar中包含有OSGI Manifest并manifest中含有Bundle-SymbolicName属生，返回manifest中的Bundle-SymbolicName属性。&lt;br&gt;如果groupId只有一部分（没有.）并且artifact.getFile非空，返回第一个有类的包名。&lt;br&gt;如果artifactId与groupId的最后一部分相等，返回groupid.例如org.apache.maven:maven-&amp;gt;org.apache.maven&lt;br&gt;如果artifactId开始部分与groupId的最后部分相重叠，去掉其中的一个重叠的部分。例如:org.apache.maven:maven-core-&amp;gt;org.apache.maven.core&lt;/p&gt;
+&lt;p&gt;Export-Package默认值为所有包含有java的包，除了.与一些包名中包含有’impl’与’internal’的包。&lt;br&gt;Private-Package默认包含所有有java的包&lt;br&gt;Import-Package默认为*&lt;br&gt;Include-Resource默认src/main/resources/&lt;br&gt;Bundle-Version默认为”${pom.version}”，但必须符合OSGI版本格式”MAJOR.MINOR.MICRO.QUALIFIER”，比如 “2.1-SNAPSHOT” 将变成”2.1.0.SNAPSHOT”&lt;br&gt;&amp;lt;Bundle-Name&amp;gt; 默认为 “${pom.name}”.&lt;br&gt;&amp;lt;Bundle-Description&amp;gt; 默认为 “${pom.description}”.&lt;br&gt;&amp;lt;Bundle-License&amp;gt; 默认为 “${pom.licenses}”.&lt;br&gt;&amp;lt;Bundle-Vendor&amp;gt; 默认为 “${pom.organization.name}”.&lt;br&gt;&amp;lt;Bundle-DocURL&amp;gt; 默认为 “${pom.organization.url}”.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本文出自 &lt;a href=&quot;http://xiaoruoen.blog.51cto.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;“自是人生长恨水长东”&lt;/a&gt; 博客&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;转自&lt;a href=&quot;http://xiaoruoen.blog.51cto.com/4828946/1232285&quot;&gt;http://xiaoruoen.blog.51cto.com/4828946/1232285&lt;/a&gt;，英文文档&lt;a href=&quot;http://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html&quot;&gt;在这里&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;lt-Export-Package-gt&quot;&gt;&lt;a href=&quot;#lt-Export-Package-gt&quot; class=&quot;headerlink&quot; title=&quot;&amp;lt;Export-Package&amp;gt;&quot;&gt;&lt;/a&gt;&amp;lt;Export-Package&amp;gt;&lt;/h3&gt;&lt;p&gt;Export-Package指令列出所有bundle要导出的包。这些包会从能找到的class中被复制到bundle JAR中。因此，我们能够只包含class文件到bundle中而不用去关心源代码。Export-Package可以使用通配符”*”,也可以使用否定符号”!”排除某个包。&lt;/p&gt;
+&lt;p&gt;Export-Package中列出的包是有顺序的。先列出的比后列出的要优先应用。假如指定了规则”org.foo.*,!org.foo.impl”，因为第一个规则把org.foo下的所有包都导出了，第二个规则就没有作了。相反，如果指定了规则”!org.foo.impl,org.foo.*“,就可以导出除了org.foo.impl外的所有包。&lt;/p&gt;
+&lt;p&gt;根据标准OSGI R4语法，包的规则可以包含指示符与属性，指示符与属性会被正确的复制用来生成Export-Package manifest header。除了明确的列出包的版本属性。BND会检查源JAR包文件或者从package目录下的packageinfo文件来确定版本。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://zhangzeyang66.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="SDN" scheme="http://zhangzeyang66.github.io/tags/SDN/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hexo的NexT主题部署后不显示内容的解决方法</title>
-    <link href="http://zhangzeyang66.github.io/2016/11/07/Hexo%E7%9A%84NexT%E4%B8%BB%E9%A2%98%E9%83%A8%E7%BD%B2%E5%90%8E%E4%B8%8D%E6%98%BE%E7%A4%BA%E5%86%85%E5%AE%B9%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
-    <id>http://zhangzeyang66.github.io/2016/11/07/Hexo的NexT主题部署后不显示内容的解决方法/</id>
+    <link href="http://zhangzeyang66.github.io/2016/11/07/NexT-theme-in-Hexo/"/>
+    <id>http://zhangzeyang66.github.io/2016/11/07/NexT-theme-in-Hexo/</id>
     <published>2016-11-07T04:12:36.000Z</published>
     <updated>2016-11-07T04:42:21.349Z</updated>
     
@@ -46,8 +91,8 @@
   
   <entry>
     <title>ONOS与OVS间设置SSL安全连接</title>
-    <link href="http://zhangzeyang66.github.io/2016/10/18/ONOS%E4%B8%8EOVS%E9%97%B4%E8%AE%BE%E7%BD%AESSL%E5%AE%89%E5%85%A8%E8%BF%9E%E6%8E%A5/"/>
-    <id>http://zhangzeyang66.github.io/2016/10/18/ONOS与OVS间设置SSL安全连接/</id>
+    <link href="http://zhangzeyang66.github.io/2016/10/18/SSL-between-ONOS-and-OVS/"/>
+    <id>http://zhangzeyang66.github.io/2016/10/18/SSL-between-ONOS-and-OVS/</id>
     <published>2016-10-18T15:13:51.000Z</published>
     <updated>2016-11-07T02:26:40.795Z</updated>
     
@@ -92,8 +137,8 @@
   
   <entry>
     <title>推荐几个Windows下的实用小工具（中）</title>
-    <link href="http://zhangzeyang66.github.io/2016/09/09/%E6%8E%A8%E8%8D%90%E5%87%A0%E4%B8%AAWindows%E4%B8%8B%E7%9A%84%E5%AE%9E%E7%94%A8%E5%B0%8F%E5%B7%A5%E5%85%B7%EF%BC%88%E4%B8%AD%EF%BC%89/"/>
-    <id>http://zhangzeyang66.github.io/2016/09/09/推荐几个Windows下的实用小工具（中）/</id>
+    <link href="http://zhangzeyang66.github.io/2016/09/09/Windows-tools-2/"/>
+    <id>http://zhangzeyang66.github.io/2016/09/09/Windows-tools-2/</id>
     <published>2016-09-09T07:01:20.000Z</published>
     <updated>2016-09-10T06:59:20.839Z</updated>
     
@@ -128,8 +173,8 @@
   
   <entry>
     <title>我是如何搭建个人主页的</title>
-    <link href="http://zhangzeyang66.github.io/2016/07/05/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E7%9A%84/"/>
-    <id>http://zhangzeyang66.github.io/2016/07/05/我是如何搭建个人主页的/</id>
+    <link href="http://zhangzeyang66.github.io/2016/07/05/how-to-build-homepage/"/>
+    <id>http://zhangzeyang66.github.io/2016/07/05/how-to-build-homepage/</id>
     <published>2016-07-05T01:18:22.000Z</published>
     <updated>2016-09-09T11:12:41.116Z</updated>
     
@@ -189,8 +234,8 @@ Host my.github.com
   
   <entry>
     <title>博客迁移测试</title>
-    <link href="http://zhangzeyang66.github.io/2016/06/09/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E6%B5%8B%E8%AF%95/"/>
-    <id>http://zhangzeyang66.github.io/2016/06/09/博客迁移测试/</id>
+    <link href="http://zhangzeyang66.github.io/2016/06/09/Blog-move/"/>
+    <id>http://zhangzeyang66.github.io/2016/06/09/Blog-move/</id>
     <published>2016-06-09T10:49:54.000Z</published>
     <updated>2016-06-09T11:01:12.063Z</updated>
     
@@ -211,8 +256,8 @@ Host my.github.com
   
   <entry>
     <title>《我在故宫修文物》观后记</title>
-    <link href="http://zhangzeyang66.github.io/2016/05/14/%E3%80%8A%E6%88%91%E5%9C%A8%E6%95%85%E5%AE%AB%E4%BF%AE%E6%96%87%E7%89%A9%E3%80%8B%E8%A7%82%E5%90%8E%E8%AE%B0/"/>
-    <id>http://zhangzeyang66.github.io/2016/05/14/《我在故宫修文物》观后记/</id>
+    <link href="http://zhangzeyang66.github.io/2016/05/14/wo-zai-gugong/"/>
+    <id>http://zhangzeyang66.github.io/2016/05/14/wo-zai-gugong/</id>
     <published>2016-05-14T06:23:42.000Z</published>
     <updated>2016-05-14T09:33:32.562Z</updated>
     
@@ -250,8 +295,8 @@ Host my.github.com
   
   <entry>
     <title>推荐几个Windows下的实用小工具（上）</title>
-    <link href="http://zhangzeyang66.github.io/2016/03/25/%E6%8E%A8%E8%8D%90%E5%87%A0%E4%B8%AAWindows%E4%B8%8B%E7%9A%84%E5%AE%9E%E7%94%A8%E5%B0%8F%E5%B7%A5%E5%85%B7%EF%BC%88%E4%B8%8A%EF%BC%89/"/>
-    <id>http://zhangzeyang66.github.io/2016/03/25/推荐几个Windows下的实用小工具（上）/</id>
+    <link href="http://zhangzeyang66.github.io/2016/03/25/Windows-tools-1/"/>
+    <id>http://zhangzeyang66.github.io/2016/03/25/Windows-tools-1/</id>
     <published>2016-03-25T08:06:54.000Z</published>
     <updated>2016-03-25T09:30:37.737Z</updated>
     
@@ -281,8 +326,8 @@ Host my.github.com
   
   <entry>
     <title>用于树莓派的 mini LCD12864 驱动演示程序</title>
-    <link href="http://zhangzeyang66.github.io/2016/03/06/%E7%94%A8%E4%BA%8E%E6%A0%91%E8%8E%93%E6%B4%BE%E7%9A%84-mini-LCD12864-%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F/"/>
-    <id>http://zhangzeyang66.github.io/2016/03/06/用于树莓派的-mini-LCD12864-驱动程序/</id>
+    <link href="http://zhangzeyang66.github.io/2016/03/06/mini-LCD12864/"/>
+    <id>http://zhangzeyang66.github.io/2016/03/06/mini-LCD12864/</id>
     <published>2016-03-06T13:04:01.000Z</published>
     <updated>2016-05-14T09:57:17.510Z</updated>
     
@@ -307,8 +352,8 @@ Host my.github.com
   
   <entry>
     <title>第88届奥斯卡完全获奖名单</title>
-    <link href="http://zhangzeyang66.github.io/2016/02/29/%E7%AC%AC88%E5%B1%8A%E5%A5%A5%E6%96%AF%E5%8D%A1%E5%AE%8C%E5%85%A8%E8%8E%B7%E5%A5%96%E5%90%8D%E5%8D%95/"/>
-    <id>http://zhangzeyang66.github.io/2016/02/29/第88届奥斯卡完全获奖名单/</id>
+    <link href="http://zhangzeyang66.github.io/2016/02/29/Oscar-88/"/>
+    <id>http://zhangzeyang66.github.io/2016/02/29/Oscar-88/</id>
     <published>2016-02-29T09:27:49.000Z</published>
     <updated>2016-02-29T09:37:14.700Z</updated>
     
@@ -446,8 +491,8 @@ Host my.github.com
   
   <entry>
     <title>欢迎大家来我的博客参观</title>
-    <link href="http://zhangzeyang66.github.io/2016/02/26/%E6%AC%A2%E8%BF%8E%E5%A4%A7%E5%AE%B6%E6%9D%A5%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%8F%82%E8%A7%82/"/>
-    <id>http://zhangzeyang66.github.io/2016/02/26/欢迎大家来我的博客参观/</id>
+    <link href="http://zhangzeyang66.github.io/2016/02/26/Welcome/"/>
+    <id>http://zhangzeyang66.github.io/2016/02/26/Welcome/</id>
     <published>2016-02-26T04:25:27.000Z</published>
     <updated>2016-02-26T04:42:09.642Z</updated>
     
@@ -468,8 +513,8 @@ Host my.github.com
   
   <entry>
     <title>Markdown语法测试</title>
-    <link href="http://zhangzeyang66.github.io/2016/02/26/Markdown%E8%AF%AD%E6%B3%95%E6%B5%8B%E8%AF%95/"/>
-    <id>http://zhangzeyang66.github.io/2016/02/26/Markdown语法测试/</id>
+    <link href="http://zhangzeyang66.github.io/2016/02/26/Markdown-test/"/>
+    <id>http://zhangzeyang66.github.io/2016/02/26/Markdown-test/</id>
     <published>2016-02-26T03:17:37.000Z</published>
     <updated>2016-02-26T09:19:41.324Z</updated>
     
@@ -544,8 +589,8 @@ Host my.github.com
   
   <entry>
     <title>Hexo常用命令</title>
-    <link href="http://zhangzeyang66.github.io/2016/02/26/Hexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
-    <id>http://zhangzeyang66.github.io/2016/02/26/Hexo常用命令/</id>
+    <link href="http://zhangzeyang66.github.io/2016/02/26/about-Hexo/"/>
+    <id>http://zhangzeyang66.github.io/2016/02/26/about-Hexo/</id>
     <published>2016-02-26T03:13:36.000Z</published>
     <updated>2016-02-26T03:54:43.618Z</updated>
     
