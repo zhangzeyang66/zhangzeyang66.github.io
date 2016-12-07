@@ -337,8 +337,8 @@
           <blockquote>
 <p>转自<a href="http://xiaoruoen.blog.51cto.com/4828946/1232285">http://xiaoruoen.blog.51cto.com/4828946/1232285</a>，英文文档<a href="http://felix.apache.org/documentation/subprojects/apache-felix-maven-bundle-plugin-bnd.html">在这里</a></p>
 </blockquote>
-<h3 id="lt-Export-Package-gt"><a href="#lt-Export-Package-gt" class="headerlink" title="&lt;Export-Package&gt;"></a>&lt;Export-Package&gt;</h3><p>Export-Package指令列出所有bundle要导出的包。这些包会从能找到的class中被复制到bundle JAR中。因此，我们能够只包含class文件到bundle中而不用去关心源代码。Export-Package可以使用通配符”*”,也可以使用否定符号”!”排除某个包。</p>
-<p>Export-Package中列出的包是有顺序的。先列出的比后列出的要优先应用。假如指定了规则”org.foo.*,!org.foo.impl”，因为第一个规则把org.foo下的所有包都导出了，第二个规则就没有作了。相反，如果指定了规则”!org.foo.impl,org.foo.*“,就可以导出除了org.foo.impl外的所有包。</p>
+<h3 id="lt-Export-Package-gt"><a href="#lt-Export-Package-gt" class="headerlink" title="&lt;Export-Package&gt;"></a>&lt;Export-Package&gt;</h3><p>Export-Package指令列出所有bundle要导出的包。这些包会从能找到的class中被复制到bundle JAR中。因此，我们能够只包含class文件到bundle中而不用去关心源代码。Export-Package可以使用通配符“*”,也可以使用否定符号“!”排除某个包。</p>
+<p>Export-Package中列出的包是有顺序的。先列出的比后列出的要优先应用。假如指定了规则“org.foo.*,!org.foo.impl”，因为第一个规则把org.foo下的所有包都导出了，第二个规则就没有作了。相反，如果指定了规则“!org.foo.impl,org.foo.*”,就可以导出除了org.foo.impl外的所有包。</p>
 <p>根据标准OSGI R4语法，包的规则可以包含指示符与属性，指示符与属性会被正确的复制用来生成Export-Package manifest header。除了明确的列出包的版本属性。BND会检查源JAR包文件或者从package目录下的packageinfo文件来确定版本。<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/12/07/maven-bundle-plugin/#more" rel="contents">
