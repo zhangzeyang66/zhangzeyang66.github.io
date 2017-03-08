@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="SDN," />
 
 
 
@@ -86,17 +86,19 @@
 
 
 
-<meta name="description" content="哈喽！这是我的个人博客！欢迎大家！顺便试一下图片的外链是否成功。">
+<meta name="description" content="1.安装JDK（从Oracle官网下载，不要用OpenJDK）1.Download and Extract JDK package, such as jdk-8u121-linux-x64.tar.gz.1tar -xzf jdk-8u121-linux-x64.tar.gz
+and you can see new directory /home/yourname/jdk1.8.0_121.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="欢迎大家来我的博客参观">
-<meta property="og:url" content="http://zhangzeyang66.github.io/2016/02/26/Welcome/index.html">
+<meta property="og:title" content="ONOS新版本源码安装方式">
+<meta property="og:url" content="http://zhangzeyang66.github.io/2017/03/08/ONOS-installation/index.html">
 <meta property="og:site_name" content="张查理的博客">
-<meta property="og:description" content="哈喽！这是我的个人博客！欢迎大家！顺便试一下图片的外链是否成功。">
-<meta property="og:image" content="http://7xr9by.com1.z0.glb.clouddn.com/20160208.jpg">
-<meta property="og:updated_time" content="2016-02-26T04:42:09.642Z">
+<meta property="og:description" content="1.安装JDK（从Oracle官网下载，不要用OpenJDK）1.Download and Extract JDK package, such as jdk-8u121-linux-x64.tar.gz.1tar -xzf jdk-8u121-linux-x64.tar.gz
+and you can see new directory /home/yourname/jdk1.8.0_121.">
+<meta property="og:updated_time" content="2017-03-08T08:21:26.798Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="欢迎大家来我的博客参观">
-<meta name="twitter:description" content="哈喽！这是我的个人博客！欢迎大家！顺便试一下图片的外链是否成功。">
+<meta name="twitter:title" content="ONOS新版本源码安装方式">
+<meta name="twitter:description" content="1.安装JDK（从Oracle官网下载，不要用OpenJDK）1.Download and Extract JDK package, such as jdk-8u121-linux-x64.tar.gz.1tar -xzf jdk-8u121-linux-x64.tar.gz
+and you can see new directory /home/yourname/jdk1.8.0_121.">
 
 
 
@@ -114,7 +116,7 @@
   };
 </script>
 
-  <title> 欢迎大家来我的博客参观 | 张查理的博客 </title>
+  <title> ONOS新版本源码安装方式 | 张查理的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -264,7 +266,7 @@
             
             
               
-                欢迎大家来我的博客参观
+                ONOS新版本源码安装方式
               
             
           </h1>
@@ -276,8 +278,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-26T12:25:27+08:00" content="2016-02-26">
-              2016-02-26
+            <time itemprop="dateCreated" datetime="2017-03-08T15:51:43+08:00" content="2017-03-08">
+              2017-03-08
             </time>
           </span>
 
@@ -290,8 +292,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
+                  <a href="/categories/项目展示/" itemprop="url" rel="index">
+                    <span itemprop="name">项目展示</span>
                   </a>
                 </span>
 
@@ -306,8 +308,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/02/26/Welcome/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/26/Welcome/" itemprop="commentsCount"></span>
+                <a href="/2017/03/08/ONOS-installation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/08/ONOS-installation/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -335,7 +337,39 @@
       
 
       
-        <p>哈喽！这是我的个人博客！欢迎大家！<br>顺便试一下图片的外链是否成功。<br><img src="http://7xr9by.com1.z0.glb.clouddn.com/20160208.jpg" alt="猴"></p>
+        <h3 id="1-安装JDK（从Oracle官网下载，不要用OpenJDK）"><a href="#1-安装JDK（从Oracle官网下载，不要用OpenJDK）" class="headerlink" title="1.安装JDK（从Oracle官网下载，不要用OpenJDK）"></a>1.安装JDK（从Oracle官网下载，不要用OpenJDK）</h3><p>1.Download and Extract JDK package, such as jdk-8u121-linux-x64.tar.gz.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xzf jdk-<span class="number">8</span>u121-linux-x64.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>and you can see new directory /home/yourname/jdk1.8.0_121.  </p>
+<p>2.Add two environment variables into ~/.bashrc or /etc/profile:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/yourname/jdk1.<span class="number">8.0</span>_121</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></p>
+<p>3.Save and open a new terminal, go on next step.</p>
+<p>或<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install software-properties-common -y &amp;&amp; \</span><br><span class="line">sudo add-apt-repository ppa:webupd8team/java -y &amp;&amp; \</span><br><span class="line">sudo apt-get update &amp;&amp; \</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"oracle-java8-installer shared/accepted-oracle-license-v1-1 select true"</span> | sudo debconf-set-selections &amp;&amp; \</span><br><span class="line">sudo apt-get install oracle-java8-installer oracle-java8-set-default -y</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-下载源码并编译"><a href="#2-下载源码并编译" class="headerlink" title="2.下载源码并编译"></a>2.下载源码并编译</h3><pre><code class="bash">git <span class="built_in">clone</span> https://gerrit.onosproject.org/onos
+<span class="built_in">cd</span> onos <span class="comment">#之后的命令均在此目录下</span>
+tools/build/onos-buck build onos --show-output
+</code></pre>
+<p>正常的话，会打印出.tar.gz目录，这个就是二进制安装文件。</p>
+<h3 id="3-本地运行ONOS"><a href="#3-本地运行ONOS" class="headerlink" title="3.本地运行ONOS"></a>3.本地运行ONOS</h3><pre><code class="bash">tools/build/onos-buck run onos-local -- clean debug
+</code></pre>
+<p>以上命令将会从本地的 onos.tar.gz文件中进行本地安装，并在后台开启ONOS服务。在终端上将会持续打出ONOS的日志内容。clean选项会使其进行ONOS的清洁安装，而debug选项意为默认调试端口5005将会开启。</p>
+<h3 id="4-设置环境变量"><a href="#4-设置环境变量" class="headerlink" title="4.设置环境变量"></a>4.设置环境变量</h3><p>在/etc/profile中添加：  </p>
+<pre><code class="bash"><span class="built_in">export</span> ONOS_ROOT=/home/yourname/onos
+<span class="built_in">source</span> <span class="variable">$ONOS_ROOT</span>/tools/dev/bash_profile
+</code></pre>
+<h3 id="5-开启ONOS的CLI控制台"><a href="#5-开启ONOS的CLI控制台" class="headerlink" title="5.开启ONOS的CLI控制台"></a>5.开启ONOS的CLI控制台</h3><p>在本地开启ONOS之后，在新的终端执行以下命令：  </p>
+<pre><code class="bash">tools/<span class="built_in">test</span>/bin/onos localhost
+</code></pre>
+<h3 id="6-开启ONOS的GUI界面"><a href="#6-开启ONOS的GUI界面" class="headerlink" title="6.开启ONOS的GUI界面"></a>6.开启ONOS的GUI界面</h3><p>在本地开启ONOS之后，在新的终端执行以下命令：  </p>
+<pre><code class="bash">tools/<span class="built_in">test</span>/bin/onos-gui localhost
+<span class="comment">#（实际执行了open http://$host:8181/onos/ui，Ubuntu不支持，</span>
+<span class="comment">#出错Couldn't get a file descriptor referring to the console）</span>
+</code></pre>
+<p>或者访问<a href="http://localhost:8181/onos/ui" target="_blank" rel="external">http://localhost:8181/onos/ui</a> （推荐）<br>默认用户名onos，密码rocks</p>
+<h3 id="7-ONOS单元测试"><a href="#7-ONOS单元测试" class="headerlink" title="7.ONOS单元测试"></a>7.ONOS单元测试</h3><p>To execute ONOS unit tests, including code Checkstyle validation, run the following command:  </p>
+<pre><code class="bash">tools/build/onos-buck <span class="built_in">test</span>
+</code></pre>
+<h3 id="8-导入工程到IDE"><a href="#8-导入工程到IDE" class="headerlink" title="8.导入工程到IDE"></a>8.导入工程到IDE</h3><p>If you want to import the project into IntelliJ, you can generate the hierarchical module structure via the following command:  </p>
+<pre><code class="bash">tools/build/onos-buck project
+</code></pre>
+<p>Then simply open the onos directory from IntelliJ IDEA.</p>
 
       
     </div>
@@ -355,22 +389,24 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/SDN/" rel="tag">#SDN</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/02/26/Markdown-test/" rel="next" title="Markdown语法测试">
-                <i class="fa fa-chevron-left"></i> Markdown语法测试
+              <a href="/2016/12/07/maven-bundle-plugin/" rel="next" title="[转]maven-bundle-plugin的指令说明">
+                <i class="fa fa-chevron-left"></i> [转]maven-bundle-plugin的指令说明
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/02/29/Oscar-88/" rel="prev" title="第88届奥斯卡完全获奖名单">
-                第88届奥斯卡完全获奖名单 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -385,10 +421,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/02/26/Welcome/"
-     data-title="欢迎大家来我的博客参观"
+        <div class="ds-share flat" data-thread-key="2017/03/08/ONOS-installation/"
+     data-title="ONOS新版本源码安装方式"
      data-content=""
-     data-url="http://zhangzeyang66.github.io/2016/02/26/Welcome/">
+     data-url="http://zhangzeyang66.github.io/2017/03/08/ONOS-installation/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -415,8 +451,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/02/26/Welcome/"
-           data-title="欢迎大家来我的博客参观" data-url="http://zhangzeyang66.github.io/2016/02/26/Welcome/">
+      <div class="ds-thread" data-thread-key="2017/03/08/ONOS-installation/"
+           data-title="ONOS新版本源码安装方式" data-url="http://zhangzeyang66.github.io/2017/03/08/ONOS-installation/">
       </div>
     
   </div>
@@ -561,7 +597,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装JDK（从Oracle官网下载，不要用OpenJDK）"><span class="nav-number">1.</span> <span class="nav-text">1.安装JDK（从Oracle官网下载，不要用OpenJDK）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-下载源码并编译"><span class="nav-number">2.</span> <span class="nav-text">2.下载源码并编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-本地运行ONOS"><span class="nav-number">3.</span> <span class="nav-text">3.本地运行ONOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-设置环境变量"><span class="nav-number">4.</span> <span class="nav-text">4.设置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-开启ONOS的CLI控制台"><span class="nav-number">5.</span> <span class="nav-text">5.开启ONOS的CLI控制台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-开启ONOS的GUI界面"><span class="nav-number">6.</span> <span class="nav-text">6.开启ONOS的GUI界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-ONOS单元测试"><span class="nav-number">7.</span> <span class="nav-text">7.ONOS单元测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-导入工程到IDE"><span class="nav-number">8.</span> <span class="nav-text">8.导入工程到IDE</span></a></li></ol></div>
             
           </div>
         </section>

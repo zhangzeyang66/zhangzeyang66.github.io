@@ -265,6 +265,158 @@
             
               
                 
+                <a class="post-title-link" href="/2017/03/08/ONOS-installation/" itemprop="url">
+                  ONOS新版本源码安装方式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-08T15:51:43+08:00" content="2017-03-08">
+              2017-03-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/项目展示/" itemprop="url" rel="index">
+                    <span itemprop="name">项目展示</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/08/ONOS-installation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/08/ONOS-installation/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-安装JDK（从Oracle官网下载，不要用OpenJDK）"><a href="#1-安装JDK（从Oracle官网下载，不要用OpenJDK）" class="headerlink" title="1.安装JDK（从Oracle官网下载，不要用OpenJDK）"></a>1.安装JDK（从Oracle官网下载，不要用OpenJDK）</h3><p>1.Download and Extract JDK package, such as jdk-8u121-linux-x64.tar.gz.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xzf jdk-<span class="number">8</span>u121-linux-x64.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>and you can see new directory /home/yourname/jdk1.8.0_121.  </p>
+<p>2.Add two environment variables into ~/.bashrc or /etc/profile:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/yourname/jdk1.<span class="number">8.0</span>_121</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></p>
+<p>3.Save and open a new terminal, go on next step.</p>
+<p>或<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install software-properties-common -y &amp;&amp; \</span><br><span class="line">sudo add-apt-repository ppa:webupd8team/java -y &amp;&amp; \</span><br><span class="line">sudo apt-get update &amp;&amp; \</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"oracle-java8-installer shared/accepted-oracle-license-v1-1 select true"</span> | sudo debconf-set-selections &amp;&amp; \</span><br><span class="line">sudo apt-get install oracle-java8-installer oracle-java8-set-default -y</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-下载源码并编译"><a href="#2-下载源码并编译" class="headerlink" title="2.下载源码并编译"></a>2.下载源码并编译</h3><pre><code class="bash">git <span class="built_in">clone</span> https://gerrit.onosproject.org/onos
+<span class="built_in">cd</span> onos <span class="comment">#之后的命令均在此目录下</span>
+tools/build/onos-buck build onos --show-output
+</code></pre>
+<p>正常的话，会打印出.tar.gz目录，这个就是二进制安装文件。</p>
+<h3 id="3-本地运行ONOS"><a href="#3-本地运行ONOS" class="headerlink" title="3.本地运行ONOS"></a>3.本地运行ONOS</h3><pre><code class="bash">tools/build/onos-buck run onos-local -- clean debug
+</code></pre>
+<p>以上命令将会从本地的 onos.tar.gz文件中进行本地安装，并在后台开启ONOS服务。在终端上将会持续打出ONOS的日志内容。clean选项会使其进行ONOS的清洁安装，而debug选项意为默认调试端口5005将会开启。</p>
+<h3 id="4-设置环境变量"><a href="#4-设置环境变量" class="headerlink" title="4.设置环境变量"></a>4.设置环境变量</h3><p>在/etc/profile中添加：  </p>
+<pre><code class="bash"><span class="built_in">export</span> ONOS_ROOT=/home/yourname/onos
+<span class="built_in">source</span> <span class="variable">$ONOS_ROOT</span>/tools/dev/bash_profile
+</code></pre>
+<h3 id="5-开启ONOS的CLI控制台"><a href="#5-开启ONOS的CLI控制台" class="headerlink" title="5.开启ONOS的CLI控制台"></a>5.开启ONOS的CLI控制台</h3><p>在本地开启ONOS之后，在新的终端执行以下命令：  </p>
+<pre><code class="bash">tools/<span class="built_in">test</span>/bin/onos localhost
+</code></pre>
+<h3 id="6-开启ONOS的GUI界面"><a href="#6-开启ONOS的GUI界面" class="headerlink" title="6.开启ONOS的GUI界面"></a>6.开启ONOS的GUI界面</h3><p>在本地开启ONOS之后，在新的终端执行以下命令：  </p>
+<pre><code class="bash">tools/<span class="built_in">test</span>/bin/onos-gui localhost
+<span class="comment">#（实际执行了open http://$host:8181/onos/ui，Ubuntu不支持，</span>
+<span class="comment">#出错Couldn't get a file descriptor referring to the console）</span>
+</code></pre>
+<p>或者访问<a href="http://localhost:8181/onos/ui" target="_blank" rel="external">http://localhost:8181/onos/ui</a> （推荐）<br>默认用户名onos，密码rocks</p>
+<h3 id="7-ONOS单元测试"><a href="#7-ONOS单元测试" class="headerlink" title="7.ONOS单元测试"></a>7.ONOS单元测试</h3><p>To execute ONOS unit tests, including code Checkstyle validation, run the following command:  </p>
+<pre><code class="bash">tools/build/onos-buck <span class="built_in">test</span>
+</code></pre>
+<h3 id="8-导入工程到IDE"><a href="#8-导入工程到IDE" class="headerlink" title="8.导入工程到IDE"></a>8.导入工程到IDE</h3><p>If you want to import the project into IntelliJ, you can generate the hierarchical module structure via the following command:  </p>
+<pre><code class="bash">tools/build/onos-buck project
+</code></pre>
+<p>Then simply open the onos directory from IntelliJ IDEA.</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/12/07/maven-bundle-plugin/" itemprop="url">
                   [转]maven-bundle-plugin的指令说明
                 </a>
@@ -743,132 +895,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/05/how-to-build-homepage/" itemprop="url">
-                  我是如何搭建个人主页的
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-05T09:18:22+08:00" content="2016-07-05">
-              2016-07-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/博客制作/" itemprop="url" rel="index">
-                    <span itemprop="name">博客制作</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/07/05/how-to-build-homepage/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/05/how-to-build-homepage/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这两天搭建了一个个人主页，地址是<a href="https://zhangzeyang66.github.io/aboutme/">zhangzeyang66.github.io/aboutme</a>，主页中有按钮链接直达我的博客，在我博客的主页中也增加了个人主页的链接。下面分步骤介绍一下我的这个个人主页的搭建方法（基于Bootstrap，Windows环境）。在文末还有一段视频来介绍我的步骤。</p>
-<blockquote>
-<p><strong>请注意：我在之前已经搭建了域名为zhangzeyang66.github.io的这个博客，这次是在它的子目录页面搭建个人主页。我也已经在使用一个原来的SSH Key，这次需要增加一个Key用来搭建个人主页，并进行相应设置。这些都与第一次在GitHub搭建GitHub Pages不同，读者若是第一次搭建，所用步骤在很多方面应该与我的不同。</strong></p>
-</blockquote>
-<h1 id="注册GitHub并安装Git环境"><a href="#注册GitHub并安装Git环境" class="headerlink" title="注册GitHub并安装Git环境"></a>注册GitHub并安装Git环境</h1><p>这些操作我在之前就已经做过了。关于这方面，网上有很多教程，操作起来也并不难，在这里略过这一部分。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/07/05/how-to-build-homepage/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -914,7 +940,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1021,8 +1047,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

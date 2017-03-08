@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zhangzeyang66.github.io/"/>
-  <updated>2016-12-07T10:55:38.223Z</updated>
+  <updated>2017-03-08T08:21:26.798Z</updated>
   <id>http://zhangzeyang66.github.io/</id>
   
   <author>
@@ -14,6 +14,61 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ONOS新版本源码安装方式</title>
+    <link href="http://zhangzeyang66.github.io/2017/03/08/ONOS-installation/"/>
+    <id>http://zhangzeyang66.github.io/2017/03/08/ONOS-installation/</id>
+    <published>2017-03-08T07:51:43.000Z</published>
+    <updated>2017-03-08T08:21:26.798Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;1-安装JDK（从Oracle官网下载，不要用OpenJDK）&quot;&gt;&lt;a href=&quot;#1-安装JDK（从Oracle官网下载，不要用OpenJDK）&quot; class=&quot;headerlink&quot; title=&quot;1.安装JDK（从Oracle官网下载，不要用OpenJDK）&quot;&gt;&lt;/a&gt;1.安装JDK（从Oracle官网下载，不要用OpenJDK）&lt;/h3&gt;&lt;p&gt;1.Download and Extract JDK package, such as jdk-8u121-linux-x64.tar.gz.&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;tar -xzf jdk-&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;u121-linux-x64.tar.gz&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;and you can see new directory /home/yourname/jdk1.8.0_121.  &lt;/p&gt;
+&lt;p&gt;2.Add two environment variables into ~/.bashrc or /etc/profile:&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;export&lt;/span&gt; JAVA_HOME=/home/yourname/jdk1.&lt;span class=&quot;number&quot;&gt;8.0&lt;/span&gt;_121&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;export&lt;/span&gt; PATH=&lt;span class=&quot;variable&quot;&gt;$&amp;#123;JAVA_HOME&amp;#125;&lt;/span&gt;/bin:&lt;span class=&quot;variable&quot;&gt;$PATH&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;3.Save and open a new terminal, go on next step.&lt;/p&gt;
+&lt;p&gt;或&lt;br&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;sudo apt-get install software-properties-common -y &amp;amp;&amp;amp; \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sudo add-apt-repository ppa:webupd8team/java -y &amp;amp;&amp;amp; \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sudo apt-get update &amp;amp;&amp;amp; \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;oracle-java8-installer shared/accepted-oracle-license-v1-1 select true&quot;&lt;/span&gt; | sudo debconf-set-selections &amp;amp;&amp;amp; \&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sudo apt-get install oracle-java8-installer oracle-java8-set-default -y&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&quot;2-下载源码并编译&quot;&gt;&lt;a href=&quot;#2-下载源码并编译&quot; class=&quot;headerlink&quot; title=&quot;2.下载源码并编译&quot;&gt;&lt;/a&gt;2.下载源码并编译&lt;/h3&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;git &lt;span class=&quot;built_in&quot;&gt;clone&lt;/span&gt; https://gerrit.onosproject.org/onos
+&lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; onos &lt;span class=&quot;comment&quot;&gt;#之后的命令均在此目录下&lt;/span&gt;
+tools/build/onos-buck build onos --show-output
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;正常的话，会打印出.tar.gz目录，这个就是二进制安装文件。&lt;/p&gt;
+&lt;h3 id=&quot;3-本地运行ONOS&quot;&gt;&lt;a href=&quot;#3-本地运行ONOS&quot; class=&quot;headerlink&quot; title=&quot;3.本地运行ONOS&quot;&gt;&lt;/a&gt;3.本地运行ONOS&lt;/h3&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;tools/build/onos-buck run onos-local -- clean debug
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;以上命令将会从本地的 onos.tar.gz文件中进行本地安装，并在后台开启ONOS服务。在终端上将会持续打出ONOS的日志内容。clean选项会使其进行ONOS的清洁安装，而debug选项意为默认调试端口5005将会开启。&lt;/p&gt;
+&lt;h3 id=&quot;4-设置环境变量&quot;&gt;&lt;a href=&quot;#4-设置环境变量&quot; class=&quot;headerlink&quot; title=&quot;4.设置环境变量&quot;&gt;&lt;/a&gt;4.设置环境变量&lt;/h3&gt;&lt;p&gt;在/etc/profile中添加：  &lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;export&lt;/span&gt; ONOS_ROOT=/home/yourname/onos
+&lt;span class=&quot;built_in&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$ONOS_ROOT&lt;/span&gt;/tools/dev/bash_profile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;5-开启ONOS的CLI控制台&quot;&gt;&lt;a href=&quot;#5-开启ONOS的CLI控制台&quot; class=&quot;headerlink&quot; title=&quot;5.开启ONOS的CLI控制台&quot;&gt;&lt;/a&gt;5.开启ONOS的CLI控制台&lt;/h3&gt;&lt;p&gt;在本地开启ONOS之后，在新的终端执行以下命令：  &lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;tools/&lt;span class=&quot;built_in&quot;&gt;test&lt;/span&gt;/bin/onos localhost
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;6-开启ONOS的GUI界面&quot;&gt;&lt;a href=&quot;#6-开启ONOS的GUI界面&quot; class=&quot;headerlink&quot; title=&quot;6.开启ONOS的GUI界面&quot;&gt;&lt;/a&gt;6.开启ONOS的GUI界面&lt;/h3&gt;&lt;p&gt;在本地开启ONOS之后，在新的终端执行以下命令：  &lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;tools/&lt;span class=&quot;built_in&quot;&gt;test&lt;/span&gt;/bin/onos-gui localhost
+&lt;span class=&quot;comment&quot;&gt;#（实际执行了open http://$host:8181/onos/ui，Ubuntu不支持，&lt;/span&gt;
+&lt;span class=&quot;comment&quot;&gt;#出错Couldn&#39;t get a file descriptor referring to the console）&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;或者访问&lt;a href=&quot;http://localhost:8181/onos/ui&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://localhost:8181/onos/ui&lt;/a&gt; （推荐）&lt;br&gt;默认用户名onos，密码rocks&lt;/p&gt;
+&lt;h3 id=&quot;7-ONOS单元测试&quot;&gt;&lt;a href=&quot;#7-ONOS单元测试&quot; class=&quot;headerlink&quot; title=&quot;7.ONOS单元测试&quot;&gt;&lt;/a&gt;7.ONOS单元测试&lt;/h3&gt;&lt;p&gt;To execute ONOS unit tests, including code Checkstyle validation, run the following command:  &lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;tools/build/onos-buck &lt;span class=&quot;built_in&quot;&gt;test&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&quot;8-导入工程到IDE&quot;&gt;&lt;a href=&quot;#8-导入工程到IDE&quot; class=&quot;headerlink&quot; title=&quot;8.导入工程到IDE&quot;&gt;&lt;/a&gt;8.导入工程到IDE&lt;/h3&gt;&lt;p&gt;If you want to import the project into IntelliJ, you can generate the hierarchical module structure via the following command:  &lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;tools/build/onos-buck project
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then simply open the onos directory from IntelliJ IDEA.&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1-安装JDK（从Oracle官网下载，不要用OpenJDK）&quot;&gt;&lt;a href=&quot;#1-安装JDK（从Oracle官网下载，不要用OpenJDK）&quot; class=&quot;headerlink&quot; title=&quot;1.安装JDK（从Oracle官网下载，不要用OpenJDK
+    
+    </summary>
+    
+      <category term="项目展示" scheme="http://zhangzeyang66.github.io/categories/%E9%A1%B9%E7%9B%AE%E5%B1%95%E7%A4%BA/"/>
+    
+    
+      <category term="SDN" scheme="http://zhangzeyang66.github.io/tags/SDN/"/>
+    
+  </entry>
   
   <entry>
     <title>[转]maven-bundle-plugin的指令说明</title>
