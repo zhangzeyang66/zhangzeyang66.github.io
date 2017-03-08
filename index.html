@@ -334,42 +334,15 @@
 
       
         
-          
-            <h3 id="1-安装JDK（从Oracle官网下载，不要用OpenJDK）"><a href="#1-安装JDK（从Oracle官网下载，不要用OpenJDK）" class="headerlink" title="1.安装JDK（从Oracle官网下载，不要用OpenJDK）"></a>1.安装JDK（从Oracle官网下载，不要用OpenJDK）</h3><p>1.Download and Extract JDK package, such as jdk-8u121-linux-x64.tar.gz.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xzf jdk-<span class="number">8</span>u121-linux-x64.tar.gz</span><br></pre></td></tr></table></figure></p>
+          <h3 id="1-安装JDK（从Oracle官网下载，不要用OpenJDK）"><a href="#1-安装JDK（从Oracle官网下载，不要用OpenJDK）" class="headerlink" title="1.安装JDK（从Oracle官网下载，不要用OpenJDK）"></a>1.安装JDK（从Oracle官网下载，不要用OpenJDK）</h3><p>1.Download and Extract JDK package, such as jdk-8u121-linux-x64.tar.gz.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xzf jdk-<span class="number">8</span>u121-linux-x64.tar.gz</span><br></pre></td></tr></table></figure></p>
 <p>and you can see new directory /home/yourname/jdk1.8.0_121.  </p>
 <p>2.Add two environment variables into ~/.bashrc or /etc/profile:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/yourname/jdk1.<span class="number">8.0</span>_121</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></p>
-<p>3.Save and open a new terminal, go on next step.</p>
-<p>或<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install software-properties-common -y &amp;&amp; \</span><br><span class="line">sudo add-apt-repository ppa:webupd8team/java -y &amp;&amp; \</span><br><span class="line">sudo apt-get update &amp;&amp; \</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"oracle-java8-installer shared/accepted-oracle-license-v1-1 select true"</span> | sudo debconf-set-selections &amp;&amp; \</span><br><span class="line">sudo apt-get install oracle-java8-installer oracle-java8-set-default -y</span><br></pre></td></tr></table></figure></p>
-<h3 id="2-下载源码并编译"><a href="#2-下载源码并编译" class="headerlink" title="2.下载源码并编译"></a>2.下载源码并编译</h3><pre><code class="bash">git <span class="built_in">clone</span> https://gerrit.onosproject.org/onos
-<span class="built_in">cd</span> onos <span class="comment">#之后的命令均在此目录下</span>
-tools/build/onos-buck build onos --show-output
-</code></pre>
-<p>正常的话，会打印出.tar.gz目录，这个就是二进制安装文件。</p>
-<h3 id="3-本地运行ONOS"><a href="#3-本地运行ONOS" class="headerlink" title="3.本地运行ONOS"></a>3.本地运行ONOS</h3><pre><code class="bash">tools/build/onos-buck run onos-local -- clean debug
-</code></pre>
-<p>以上命令将会从本地的 onos.tar.gz文件中进行本地安装，并在后台开启ONOS服务。在终端上将会持续打出ONOS的日志内容。clean选项会使其进行ONOS的清洁安装，而debug选项意为默认调试端口5005将会开启。</p>
-<h3 id="4-设置环境变量"><a href="#4-设置环境变量" class="headerlink" title="4.设置环境变量"></a>4.设置环境变量</h3><p>在/etc/profile中添加：  </p>
-<pre><code class="bash"><span class="built_in">export</span> ONOS_ROOT=/home/yourname/onos
-<span class="built_in">source</span> <span class="variable">$ONOS_ROOT</span>/tools/dev/bash_profile
-</code></pre>
-<h3 id="5-开启ONOS的CLI控制台"><a href="#5-开启ONOS的CLI控制台" class="headerlink" title="5.开启ONOS的CLI控制台"></a>5.开启ONOS的CLI控制台</h3><p>在本地开启ONOS之后，在新的终端执行以下命令：  </p>
-<pre><code class="bash">tools/<span class="built_in">test</span>/bin/onos localhost
-</code></pre>
-<h3 id="6-开启ONOS的GUI界面"><a href="#6-开启ONOS的GUI界面" class="headerlink" title="6.开启ONOS的GUI界面"></a>6.开启ONOS的GUI界面</h3><p>在本地开启ONOS之后，在新的终端执行以下命令：  </p>
-<pre><code class="bash">tools/<span class="built_in">test</span>/bin/onos-gui localhost
-<span class="comment">#（实际执行了open http://$host:8181/onos/ui，Ubuntu不支持，</span>
-<span class="comment">#出错Couldn't get a file descriptor referring to the console）</span>
-</code></pre>
-<p>或者访问<a href="http://localhost:8181/onos/ui" target="_blank" rel="external">http://localhost:8181/onos/ui</a> （推荐）<br>默认用户名onos，密码rocks</p>
-<h3 id="7-ONOS单元测试"><a href="#7-ONOS单元测试" class="headerlink" title="7.ONOS单元测试"></a>7.ONOS单元测试</h3><p>To execute ONOS unit tests, including code Checkstyle validation, run the following command:  </p>
-<pre><code class="bash">tools/build/onos-buck <span class="built_in">test</span>
-</code></pre>
-<h3 id="8-导入工程到IDE"><a href="#8-导入工程到IDE" class="headerlink" title="8.导入工程到IDE"></a>8.导入工程到IDE</h3><p>If you want to import the project into IntelliJ, you can generate the hierarchical module structure via the following command:  </p>
-<pre><code class="bash">tools/build/onos-buck project
-</code></pre>
-<p>Then simply open the onos directory from IntelliJ IDEA.</p>
-
-          
+<p>3.Save and open a new terminal, go on next step.<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/03/08/ONOS-installation/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
