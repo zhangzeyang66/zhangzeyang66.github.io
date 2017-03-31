@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://zhangzeyang66.github.io/"/>
-  <updated>2017-03-08T08:37:34.496Z</updated>
+  <updated>2017-03-31T09:29:36.697Z</updated>
   <id>http://zhangzeyang66.github.io/</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>推荐几个Windows下的实用小工具（下）</title>
+    <link href="http://zhangzeyang66.github.io/2017/03/31/Windows-tools-3/"/>
+    <id>http://zhangzeyang66.github.io/2017/03/31/Windows-tools-3/</id>
+    <published>2017-03-31T08:41:46.000Z</published>
+    <updated>2017-03-31T09:29:36.697Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;大家好，我又来推荐可以美化界面和提高工作效率的小公举（小工具）啦！今天正好看到桌面整理软件Fences上架steam了，心血来潮决定把这个最终篇写了，今天不写就又不知道拖到什么时候了。今天推荐Fences和Revo Uninstaller Pro软件，以Fences为主。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;Fences&quot;&gt;&lt;a href=&quot;#Fences&quot; class=&quot;headerlink&quot; title=&quot;Fences&quot;&gt;&lt;/a&gt;Fences&lt;/h2&gt;&lt;p&gt;你是否总是在桌面上堆了好多文件，把桌面用各种各样的图标占得很满？你是否想寻求一种把桌面图标分类整理的好方法？亦或是你像我一样经常换壁纸，而发现图标下白色的字体在浅色背景下很难看清楚，强迫症发作？还是只是想把讨厌的图标们暂时赶走，来好好欣赏一下壁纸？这样的话，你就需要这个桌面整理神器：Fences！&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;就像下图这样，通过简单的设置，Fences可以&lt;strong&gt;自动地帮你把桌面图标按照类型放入不同的框框（称为Fence）里&lt;/strong&gt;。下图中是我使用的3个框框，分别放置程序（可执行文件的快捷方式）、文档和文件夹。你可以为这些框框命名并设置名称的可见性，我把名称给隐去了。  &lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xr9by.com1.z0.glb.clouddn.com/Fences.PNG&quot; alt=&quot;Fences&quot;&gt;&lt;br&gt;这些框框的颜色和透明度可以自己设置，位置和大小可以改变，这样就可以在所有类型的壁纸上都很好看。可以看到，&lt;strong&gt;可执行文件的快捷方式的小箭头是不显示的&lt;/strong&gt;，拯救一堆强迫症啊。  &lt;/p&gt;
+&lt;p&gt;Fences还有一个我认为非常酷的功能就是&lt;strong&gt;双击桌面隐藏所有图标&lt;/strong&gt;。工作累了，想欣赏壁纸的话，双击一下，瞬间清爽，舒服。&lt;/p&gt;
+&lt;p&gt;当然，Fences还有自动卷起（隐藏）框框、多桌面图标切换、在桌面以多种查看方式列出任意文件夹里的内容等功能，就需要大家来探索了。&lt;/p&gt;
+&lt;p&gt;Fences现在上架了&lt;a href=&quot;http://store.steampowered.com/app/607380&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;steam&lt;/a&gt;，感兴趣的同学可以去看看。  &lt;/p&gt;
+&lt;h2 id=&quot;Revo-Uninstaller-Pro&quot;&gt;&lt;a href=&quot;#Revo-Uninstaller-Pro&quot; class=&quot;headerlink&quot; title=&quot;Revo Uninstaller Pro&quot;&gt;&lt;/a&gt;Revo Uninstaller Pro&lt;/h2&gt;&lt;p&gt;这个软件是用来卸载其他软件的。打开Revo Uninstaller Pro，在列表里选择要卸载的软件来卸载，在完成正常的卸载流程之后，它会帮你扫描该软件的残留文件，把这个软件卸得一点都不剩。可以选择安全、温和和高级3种扫描模式。我反正用高级模式卸载了无数软件都没有发现什么问题，看来没有什么副作用。&lt;br&gt;&lt;img src=&quot;http://7xr9by.com1.z0.glb.clouddn.com/Uninstaller.PNG&quot; alt=&quot;Uninstaller&quot;&gt;&lt;br&gt;在这里提到这个东西属于信仰吧，毕竟大家一般都用什么360和电脑管家来做这个事情不是嘛。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;大家好，我又来推荐可以美化界面和提高工作效率的小公举（小工具）啦！今天正好看到桌面整理软件Fences上架steam了，心血来潮决定把这个最终篇写了，今天不写就又不知道拖到什么时候了。今天推荐Fences和Revo Uninstaller Pro软件，以Fences为主。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;Fences&quot;&gt;&lt;a href=&quot;#Fences&quot; class=&quot;headerlink&quot; title=&quot;Fences&quot;&gt;&lt;/a&gt;Fences&lt;/h2&gt;&lt;p&gt;你是否总是在桌面上堆了好多文件，把桌面用各种各样的图标占得很满？你是否想寻求一种把桌面图标分类整理的好方法？亦或是你像我一样经常换壁纸，而发现图标下白色的字体在浅色背景下很难看清楚，强迫症发作？还是只是想把讨厌的图标们暂时赶走，来好好欣赏一下壁纸？这样的话，你就需要这个桌面整理神器：Fences！&lt;br&gt;
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://zhangzeyang66.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>第89届奥斯卡完全获奖名单</title>
